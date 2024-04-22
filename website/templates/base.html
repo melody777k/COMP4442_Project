@@ -4,8 +4,6 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
   <link rel="stylesheet" href="../static/css/base.css">
 
   <title>{% block title %}Home{% endblock %}</title>
@@ -13,19 +11,31 @@
 </head>
 
 <body>
-  <div class="main">
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a class="active" href="/summary">Summary</a></li>
-      <li><a href="/diagram">Diagram</a></li>
+  <div>
+    <ul class="navbar">
+      <li><a href="/" class="link">Home</a></li>
+      <li><a href="/summary" class="link">Summary</a></li>
+      <li><a href="/diagram" class="link">Diagram</a></li>
     </ul>
-      <div class="container">{% block content %} {% endblock %}</div>
-    </div>
+    <div class="container">{% block content %} {% endblock %}</div>
+  </div>
   </div>
 
 
   {% block javascript %}
-  <script src="../static/index.js"></script>
+  <script>
+    for (var i = 0; i < navItems.length; i++) {
+      navItems[i].addEventListener('click', function () {
+        for (var j = 0; j < navItems.length; j++) {
+          navItems[j].classList.remove('active');
+        }
+        this.classList.add('active');
+      });
+    }
+    var navItems = document.getElementsByClassName('link');
+
+
+  </script>
   {% endblock %}
 </body>
 
