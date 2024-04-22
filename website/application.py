@@ -52,7 +52,7 @@ def diagram():
 	return render_template("diagram.html")
 
 if __name__ == '__main__':
-	application.run(port=5000, debug = True)
+	application.run(port=5000, debug=True)
 
 
 
