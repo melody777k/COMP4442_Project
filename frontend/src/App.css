@@ -36,3 +36,178 @@
     transform: rotate(360deg);
   }
 }
+
+* {
+  font-family: serif;
+  /* font-size: 20px; */
+}
+
+td>a {
+  color: blue;
+  text-decoration: underline;
+}
+
+.button {
+  background-color: #04AA6D;
+  border: 1px solid;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1.2em;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.button-position {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.title {
+  font-size: 2em;
+  font-weight: 700;
+}
+
+table,
+th,
+tr,
+td {
+  border: 1px solid #000;
+}
+
+table {
+  margin: 20px auto;
+  padding: 10px;
+  width: 90%;
+}
+
+thead>td {
+  font-weight: bold;
+  font-size: 1.3em;
+}
+
+th,
+td {
+  text-align: center;
+  font-size: 1em;
+  /* padding: 15px; */
+}
+
+.text {
+  font-size: 1.4em;
+}
+
+.position {
+  margin: auto;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Navbar */
+
+.hr {
+  border: 2px solid;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  margin: auto;
+  width: 90%;
+  height: 80px;
+  border: 1px;
+}
+
+.links {
+  display: flex;
+  column-gap: 20px;
+  justify-content: space-evenly;
+}
+
+.link {
+  font-size: 1.5em;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+}
+
+.popup {
+  width: 50%;
+  height: max-content;
+  position: relative;
+  background-color: white;
+  border-radius: 6px;
+  padding: 20px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  max-width: 2000px;
+}
+
+.container.active {
+  display: flex;
+}
+
+.Popup {
+  width: 400px;
+  height: 200px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.confirm {
+  margin-right: 20px;
+}
+
+.input {
+  border: 1px solid;
+  border-radius: 5px;
+  width: 90%;
+}
+
+.form {
+  /* margin: 20px 5px; */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 5px;
+}
+
+.pop-title {
+  font-size: 1.2em;
+}
+
+.gender {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+}
+
+.select {
+  border: 1px solid;
+  border-radius: 6px;
+}
+
+.holiday {
+  overflow-y: scroll;
+  height: 150px;
+}

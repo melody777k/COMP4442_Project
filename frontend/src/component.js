@@ -4,16 +4,13 @@ import "./App.css";
 export function NavBar() {
 
   let Links = [
+    { name: "Home", link: "/" },
     { name: "Summary", link: "/summary" },
     { name: "Diagram", link: "/diagram" },
-    { name: "Home", link: "/" },
   ];
 
   return (
     <div className="navbar">
-      <div>
-        <p className="title">Admin Page</p>
-      </div>
       <ul className="links">
         {Links.map((link) => (
           <li key={link.name} className="link">
