@@ -1,6 +1,7 @@
 import './App.css';
 import Summary from "./pages/Summary.js";
 import Diagram from "./pages/Diagram.js";
+import Home from "./pages/home.js"
 import { BrowserRouter as Router, Link, Routes, Route } from 'react-router-dom';
 import { NavBar } from "./component.js";
 
@@ -13,6 +14,7 @@ function App() {
         <hr className="hr"/>
       <div>
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/summary" element={<Summary />} />
           <Route path="/diagram" element={<Diagram />} />
         </Routes>

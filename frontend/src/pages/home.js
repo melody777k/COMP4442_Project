@@ -22,16 +22,12 @@ export function Operations() {
           <td>Links</td>
         </thead>
         <tr>
-          <td>For checking the booking list from clients:</td>
-          <td><a href="/bookinglist">Booking List</a></td>
+          <td>For checking the driving behavior information:</td>
+          <td><a href="/summary">Summary</a></td>
         </tr>
         <tr>
-          <td>For finding all the hairstylists (Hairstylists' List):</td>
-          <td><a href="/hairstylists">All Hairstylists</a></td>
-        </tr>
-        <tr>
-        <td>For finding all the hairstylists' holiday (Hairstylists' Holiday List):</td>
-          <td><a href="/hairstylistholiday">Hairstylists Holiday List</a></td>
+          <td>A diagram to visualize the driving speed of each driver:</td>
+          <td><a href="/diagram">Diagram</a></td>
         </tr>
       </table>
     </div>
