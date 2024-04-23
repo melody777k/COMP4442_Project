@@ -49,3 +49,8 @@ tr:nth-child(even) {
   text-align: center;
   color: #0a024d;
 }
+
+.behavior-table {
+  overflow-x: auto;
+  margin: auto;
+}

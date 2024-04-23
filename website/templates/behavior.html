@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<h1 class="center">Behavior</h1>
+
+<div class="behavior-table">
+    <table style="width: 1000px;">
+        <tr>
+            <th>Driver ID</th>
+            <th>Car Plate Number</th>
+            <th>Overspeed Times</th>
+            <th>Neutral Slide Times</th>
+            <th>Total Overspeed Time (seconds)</th>
+            <th>Total Neutral Slide Time (seconds)</th>
+        </tr>
+        {% for resultLine in result %}
+        <tr>
+            <td>{{resultLine[0]}}</td>
+            <td>{{resultLine[1]}}</td>
+            <td>{{resultLine[2]}}</td>
+            <td>{{resultLine[3]}}</td>
+            <td>{{resultLine[4]}} s</td>
+            <td>{{resultLine[5]}} s</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+
+{% endblock %}
+
+{% block javascript %}
+<script src="../static/index.js"></script>
+{% endblock %}

@@ -72,7 +72,7 @@
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
+    <task active="true" id="Default">
       <changelist id="04ccde4d-c0e2-4203-b347-ca9682fa8256" name="Default Changelist" comment="" />
       <created>1713781668040</created>
       <option name="number" value="Default" />
@@ -86,22 +86,22 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1713785820609" />
-    <state width="1260" height="134" key="GridCell.Tab.0.bottom" timestamp="1713790409270">
+    <state width="1260" height="230" key="GridCell.Tab.0.bottom" timestamp="1713876228185">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1260" height="134" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1713790409270" />
-    <state width="1260" height="134" key="GridCell.Tab.0.center" timestamp="1713790409270">
+    <state width="1260" height="230" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1713876228185" />
+    <state width="1260" height="230" key="GridCell.Tab.0.center" timestamp="1713876228185">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1260" height="134" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1713790409270" />
-    <state width="1260" height="134" key="GridCell.Tab.0.left" timestamp="1713790409270">
+    <state width="1260" height="230" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1713876228185" />
+    <state width="1260" height="230" key="GridCell.Tab.0.left" timestamp="1713876228185">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1260" height="134" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1713790409270" />
-    <state width="1260" height="134" key="GridCell.Tab.0.right" timestamp="1713790409270">
+    <state width="1260" height="230" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1713876228185" />
+    <state width="1260" height="230" key="GridCell.Tab.0.right" timestamp="1713876228185">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1260" height="134" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1713790409270" />
+    <state width="1260" height="230" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1713876228185" />
     <state x="142" y="0" key="SettingsEditor" timestamp="1713781730642">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

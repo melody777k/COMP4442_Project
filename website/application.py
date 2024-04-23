@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import mysql.connector
+import json
 
 application = Flask(__name__, static_url_path='/static')
 #app = Flask(__name__)
@@ -8,24 +9,32 @@ application = Flask(__name__, static_url_path='/static')
 def home():
 	return render_template('home.html')
 
-@application.route('/summary',methods = ['POST', 'GET'])
-def summary():
-	# if request.method == 'POST':
-	# 	Name = request.form['Name']
-	# 	ID = request.form['ID']
-	# 	Department = request.form['Department']
-	# 	Email = request.form['Email']
+@application.route('/behavior',methods = ['POST', 'GET'])
+def behavior():
+	jsonLists = []
+	results = open("../result.txt", encoding='utf-8')
+	with results as f:
+		for line in f.readlines():
+			line = line.strip('\n') 
+			line = eval(line)
+			jsonList = tupleToJson(line)
+			jsonLists.append(jsonList)
 
-	# 	mydb = db_connection()
-	# 	cur = mydb.cursor()
-	# 	info = "insert into Students values('{}','{}','{}','{}')".format(Name, ID, Department, Email)
-	# 	cur.execute(info)
+	# print(jsonLists)
+	# print(type(jsonLists))
 
-	# 	mydb.commit()
-	# 	msg = "Record successfully added"
+	return render_template("behavior.html", result=jsonLists)
 
-	# 	mydb.close()
-		return render_template("summary.html")
+def tupleToJson(t):
+	jsonList = []
+	jsonList.append(t[0])
+	jsonList.append(t[1][0])
+	jsonList.append(t[1][1])
+	jsonList.append(t[1][2])
+	jsonList.append(t[1][3])
+	jsonList.append(t[1][4])
+
+	return jsonList
 
 # def db_connection():
 # 	mydb = mysql.connector.connect( host = 'database-1.cti2wk8aib5l.us-east-1.rds.amazonaws.com',
