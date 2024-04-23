@@ -2,26 +2,35 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 
-<h1>Diagram</h1>
+<h1 class="center">Diagram</h1>
 
-<div id="countdown"></div>
+<div id="show"></div>
+
 <table>
     <tr>
         <th>Driver</th>
         <th>Speed</th>
-        <th>Warning</th>
+        <th>Warning</th> 
     </tr>
     <tr>
-        <td>aaa</td>
-        <td>bbb</td>
-        <td>ccc</td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
 </table>
 {% endblock %}
 
 {% block javascript %}
 <script>
-
+var t = 30;
+    setInterval("Refresh()", 1000);
+    function Refresh() {
+        if (t == 0) {
+            window.location.reload();
+        }
+        document.getElementById('show').innerHTML = "Refresh this page after " + t + " seconds";
+        t--;
+    }
 </script>
 {% endblock %}
 
