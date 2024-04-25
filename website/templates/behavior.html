@@ -4,7 +4,17 @@
 
 <h1 class="center">Behavior</h1>
 
-<div class="behavior-table">
+<div class="table-sty">
+    <div class="select">
+        <span>From</span>
+        <input type="date" id="behavior-start-date" />
+        <input type="time" id="behavior-start-time" />
+        <span>To</span>
+        <input type="date" id="behavior-end-date" />
+        <input type="time" id="behavior-end-time" />
+    </div>
+    <div class="center"><button type="button" class="btn" onclick="generate()">Generate summary report</button></div>
+
     <table style="width: 1000px;">
         <tr>
             <th>Driver ID</th>
@@ -31,5 +41,24 @@
 {% endblock %}
 
 {% block javascript %}
-<script src="../static/index.js"></script>
+<script type="text/javascript">
+    function generate() {
+        var behaviorStartDate = document.getElementById("behavior-start-date");
+        var behaviorStartTime = document.getElementById("behavior-start-time");
+        var behaviorEndDate = document.getElementById("behavior-end-date");
+        var behaviorEndTime = document.getElementById("behavior-end-time");
+        fetch("/behavior", {
+            method: "POST",
+            body: JSON.stringify({
+                b_start_date: behaviorStartDate.value,
+                b_start_time: behaviorStartTime.value,
+                b_end_date: behaviorEndDate.value,
+                b_end_time: behaviorEndTime.value,
+            }),
+        }).then((_res) => {
+            console.log(_res)
+            // console.log(uName.value)
+        });
+    }
+</script>
 {% endblock %}

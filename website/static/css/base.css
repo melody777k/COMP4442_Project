@@ -1,9 +1,18 @@
-.navbar {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #002040;
+* {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.btn {
+  color: #dddddd;
+  background-color: #0a024d;
+  border: 1px #0a024d solid;
+  padding: 8px 4px;
+}
+
+.center {
+  margin: 5px auto;
+  text-align: center;
+  color: #0a024d;
 }
 
 li {
@@ -19,18 +28,35 @@ li {
   font-size: larger;
 }
 
-.link:hover:not(.active) {
-  background-color: #111;
+.navbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #002040;
 }
 
-.active {
-  background-color: #04AA6D;
+.select {
+  display: flex;
+  justify-content: end;
+  column-gap: 5px;
+  align-items: center;
 }
+
+span {
+  font-weight: 600;
+}
+
 
 table {
   border-collapse: collapse;
   width: 90%;
   margin: 20px auto;
+}
+
+.table-sty {
+  overflow-x: auto;
+  margin: auto;
 }
 
 td,
@@ -44,13 +70,12 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 
-.center {
-  margin: 10px;
-  text-align: center;
-  color: #0a024d;
-}
 
-.behavior-table {
-  overflow-x: auto;
-  margin: auto;
+@media only screen and (max-width: 500px) {
+  .select {
+    display: grid;
+    justify-content: end;
+    column-gap: 5px;
+    align-items: center;
+  }
 }
