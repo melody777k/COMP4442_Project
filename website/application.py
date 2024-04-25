@@ -4,25 +4,20 @@ import json
 application = Flask(__name__, static_url_path='/static')
 #app = Flask(__name__)
 
-@application.route('/')
-def home():
-	return render_template('home.html')
+def db_connection():
+	# mydb = mysql.connector.connect( host = 'database-2.c9gkgua66wjp.us-east-1.rds.amazonaws.com',
+	# user = 'group9',
+	# port = '3306',
+	# database = 'group9_db',
+	# passwd = 'comp4442')
 
-@application.route('/behavior',methods = ['POST', 'GET'])
-def behavior():
-	jsonLists = []
-	results = open("../result.txt", encoding='utf-8')
-	with results as f:
-		for line in f.readlines():
-			line = line.strip('\n') 
-			line = eval(line)
-			jsonList = tupleToJson(line)
-			jsonLists.append(jsonList)
-
-	# print(jsonLists)
-	# print(type(jsonLists))
-
-	return render_template("behavior.html", result=jsonLists)
+	# insert new database
+	# cur = mydb.cursor()
+	# cur.execute("select * from Students")
+ 
+	print("successfully connect to the database")
+	
+	# return mydb
 
 def tupleToJson(t):
 	jsonList = []
@@ -35,32 +30,41 @@ def tupleToJson(t):
 
 	return jsonList
 
-# def db_connection():
-# 	mydb = mysql.connector.connect( host = 'database-1.cti2wk8aib5l.us-east-1.rds.amazonaws.com',
-# 	user = 'admin',
-# 	port = '3306',
-# 	database = 'lab4',
-# 	passwd = '12345678')
+@application.route('/')
+def home():
+	return render_template('home.html')
 
-# 	print("successfully connect to the database")
-	
-# 	return mydb
+@application.route('/behavior',methods = ['POST', 'GET'])
+def behavior():
+	jsonLists = []
+	results = open("../result.txt", encoding='utf-8')
+	with results as file:
+		for line in file.readlines():
+			line = line.strip('\n') 
+			line = eval(line)
+			jsonList = tupleToJson(line)
+			jsonLists.append(jsonList)
+
+	# print(jsonLists)
+	# print(type(jsonLists))
+
+	return render_template("behavior.html", result=jsonLists)
 
 @application.route('/diagram')
 def diagram():
-	# mydb = db_connection()
+		# mydb = db_connection()
 
-	# cur = mydb.cursor()
-	# cur.execute("select * from Students")
+		# cur = mydb.cursor()
+		# cur.execute("select * from Students")
 
-	# myresult = cur.fetchall()
-	# for result in myresult:
-	# 	print(result)
+		# myresult = cur.fetchall()
+		# for result in myresult:
+		# 	print(result)
 
 	return render_template("diagram.html")
 
 if __name__ == '__main__':
-	application.run(port=5000, debug=True)
+	application.run(port=3000, debug=True)
 
 
 
