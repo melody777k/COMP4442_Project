@@ -43,7 +43,7 @@ inp = inp.map(lambda line: line.split(",")).map(lambda l: f(l))
 
 
 grouped = inp.map(lambda line: (line[0], (line[0], line[4], line[7]))).groupByKey().coalesce(1)
-output.saveAsTextFile(grouped)
+grouped.saveAsTextFile(out)
 
 
 sc.stop()
