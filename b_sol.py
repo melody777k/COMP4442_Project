@@ -1,4 +1,5 @@
 filename = "dataset/detail_record_2017_01_02_08_00_00"
+# File name should be put here
 
 with open(filename, 'r', encoding='utf-8') as file:
     data = file.readlines()
