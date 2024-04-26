@@ -12,10 +12,12 @@
         <option value="{{driver}}">{{driver}}</option>
         {% endfor %}
     </select>
+    <button class="btn" id="refresh" onclick="refreshDiagram()">Refresh the Diagram</button>
 </div>
 
-<div class="center diagram">
-    <canvas id="lineChart"></canvas>
+<div class="center scroll">
+    <canvas id="lineChart" class="diagram"></canvas>
+    <h1 class="center" id="nodisplay" style="margin: 100px;"></h1>
 </div>
 
 {% endblock %}
@@ -39,6 +41,12 @@
         }
         document.getElementById("show").innerHTML = "Diagram: Refresh this page after " + refreshTime + " seconds";
         refreshTime--;
+    }
+
+    function refreshDiagram() {
+        localStorage.clear();
+        window.location.reload();
+        alert("You will be starting from the beginning")
     }
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -75,54 +83,63 @@
             .then((_res) => _res.json())
             .then((data) => {
                 console.log(data);
+                var canva = document.getElementById("lineChart");
+                canva.style.display = "block";
                 if (lineChart !== null) {
-                    lineChart.destroy();
-                }
-            const labels = data.map(result => result.split(",")[2]);
-            const time = data.map(result => result.split(",")[2].split(" ")[1]);
-            const speeds = data.map(result => parseFloat(result.split(",")[1]));
-            const overspeeds = data.map(result => parseInt(result.split(",")[3]));
-
-            const ctx = document.getElementById("lineChart").getContext("2d");
-            lineChart = new Chart(ctx, {
-                type: "line",
-                data: {
-                    labels: time,
-                    datasets: [
-                        {
-                            label: "Warning: Overspeed!",
-                            data: speeds.map((value, index) => overspeeds[index] === 1 ? value : null),
-                            backgroundColor: "red",
-                            borderColor: "red",
-                            borderWidth: 1,
-                            pointBackgroundColor: "red",
-                            pointBorderColor: "red"
-                        },
-                        {
-                            label: "Speed",
-                            data: speeds,
-                            backgroundColor: "rgba(0, 123, 255, 0.5)",
-                            borderColor: "rgba(0, 123, 255, 1)",
-                            borderWidth: 1,
-                            pointBackgroundColor: "rgba(0, 123, 255, 0.5)",
-                            pointBorderColor: "rgba(0, 123, 255, 1)"
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: false
-                        }
+                        lineChart.destroy();
                     }
+                if (data == "No data to display") {
+                    canva.style.display = "none";
+                    document.getElementById("nodisplay").innerHTML = "No data to display";
+                    console.log("aaa")
                 }
+                else {
+                    const labels = data.map(result => result.split(",")[2]);
+                    const time = data.map(result => result.split(",")[2].split(" ")[1]);
+                    const speeds = data.map(result => parseFloat(result.split(",")[1]));
+                    const overspeeds = data.map(result => parseInt(result.split(",")[3]));
+
+                    const ctx = document.getElementById("lineChart").getContext("2d");
+                    lineChart = new Chart(ctx, {
+                        type: "line",
+                        data: {
+                            labels: time,
+                            datasets: [
+                                {
+                                    label: "Warning: Overspeed!",
+                                    data: speeds.map((value, index) => overspeeds[index] === 1 ? value : null),
+                                    backgroundColor: "red",
+                                    borderColor: "red",
+                                    borderWidth: 1,
+                                    pointBackgroundColor: "red",
+                                    pointBorderColor: "red"
+                                },
+                                {
+                                    label: "Speed",
+                                    data: speeds,
+                                    backgroundColor: "rgba(0, 123, 255, 0.5)",
+                                    borderColor: "rgba(0, 123, 255, 1)",
+                                    borderWidth: 1,
+                                    pointBackgroundColor: "rgba(0, 123, 255, 0.5)",
+                                    pointBorderColor: "rgba(0, 123, 255, 1)"
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: false
+                                }
+                            }
+                        }
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error(error);
             });
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-   }
+    }
 </script>
 
 {% endblock %}

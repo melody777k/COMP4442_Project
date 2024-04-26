@@ -70,19 +70,21 @@ def diagram():
 	drivers = driverList()
 	driver_data = []
 	result_data = []
-	results = []
 	if request.method == 'POST':
 		driverId = json.loads(request.data)["driverId"]
 		totalTime = json.loads(request.data)["totalTime"]
 		print("Server: received request for records of driver", driverId, "within", totalTime, "seconds")
 		with open('../resultB.txt', 'r') as all_data:
 			driver_data = [line.strip() for line in all_data.readlines() if line.split(",")[0] == driverId]
-			first_record = driver_data[0]
-			first_time = datetime.strptime(first_record.split(",")[2], "%Y-%m-%d %H:%M:%S")
-			for line in driver_data:
-				time = datetime.strptime(line.split(",")[2], "%Y-%m-%d %H:%M:%S")
-				if time - first_time <= timedelta(seconds=totalTime):
-					result_data.append(line)
+			if driver_data == []:
+				return jsonify("No data to display")
+			else:	
+				first_record = driver_data[0]
+				first_time = datetime.strptime(first_record.split(",")[2], "%Y-%m-%d %H:%M:%S")
+				for line in driver_data:
+					time = datetime.strptime(line.split(",")[2], "%Y-%m-%d %H:%M:%S")
+					if time - first_time <= timedelta(seconds=totalTime):
+						result_data.append(line)
 		
 		print(result_data)
 		return jsonify(result_data)
