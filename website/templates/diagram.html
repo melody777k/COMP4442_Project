@@ -2,33 +2,34 @@
 {% block title %}Diagram{% endblock %}
 {% block content %}
 
-<h1 class="center">Diagram</h1>
+<h1 class="center" id="show"></h1>
 
-<h3 class="center" id="show"></h3>
-
-<!-- diagram -->
-<table style="width: 1000px;">
-    <tr>
-        <th>Driver ID</th>
-        <th>Speed</th>
-        <th>Time</th>
-        <th>Overspeed</th>
-    </tr>
-    {% for resultLine in result %}
-    <tr>
-        <td>{{resultLine[0]}}</td>
-        <td>{{resultLine[1]}}</td>
-        <td>{{resultLine[2]}}</td>
-        <td>{{resultLine[3]}}</td>
-    </tr>
+<!-- Diagram -->
+<div class="center">
+    {% for driver in drivers %}
+    <button class="btn" id="{{driver}}" onclick="getId(this)" value="{{driver}}">{{driver}}</button>
     {% endfor %}
-</table>
+</div>
 
-<!-- warning -->
 <div>
-    <h3 class="center">Overspeed Warning in this interval</h3>
-    {% for resultLine in result if resultLine[3] == 1 %}
-        <span>{{resultLine[0]}} is Overspeed</span>
+    aaa
+    {% for result in results %}
+        <span>aaaa</span>
+        <div>{{result[0]}}</div>
+        <div>{{result[1]}}</div>
+        <div>{{result[3]}}</div>
+        <div>{{result[2]}}</div>
+    {% endfor %}
+</div>
+
+<!-- <div id="container" style="min-width:400px;height:400px"></div> -->
+
+
+<!-- Warning -->
+<div>
+    <h1 class="center">Overspeed Warning list in this interval</h1>
+    {% for result in results if result[3] == 1 %}
+        <span>{{driver}} is Overspeed</span>
     {% endfor %}
 </div>
 
@@ -36,14 +37,73 @@
 
 {% block javascript %}
 <script type="text/javascript">
-    var t = 30;
+    var results = [];
+    var t;
+    var refreshTime = 30;
     setInterval("Refresh()", 1000);
     function Refresh() {
-        if (t == 2) {
+        t = (localStorage.getItem("time")== null)? 1: localStorage.getItem("time")
+        if (refreshTime == 2) {
             window.location.reload();
+            t++;
+            localStorage.setItem("time",t);
+            // console.log(t)
         }
-        document.getElementById('show').innerHTML = "Refresh this page after " + t + " seconds";
-        t--;
+        document.getElementById('show').innerHTML = "Diagram: Refresh this page after " + refreshTime + " seconds";
+        refreshTime--;
+        // console.log(t);
     }
+    function getId(button) {
+        driverId = button.value;
+        // driverId = document.getElementById('{{driver}}');
+        // console.log(driverId)
+        fetch("/diagram", {
+            method: "POST",
+            body: JSON.stringify({
+                driverId: driverId,
+                totalTime: t*30
+            }),
+        }).then((_res) => {
+            console.log(_res)
+            results = _res.values
+            console.log(results)
+        });
+    }
+//     $(function () {
+//   $.getJSON('/diagram', function (data) {
+//     // Create the chart
+//     $('#container').highcharts('StockChart', {
+//       chart: {
+//         events: {
+//           load: function () {
+//             var chart = $('#container').highcharts();
+//             var series = chart.series[0];
+//             //2 seconds interval
+//             setInterval(function () {         
+//               $.getJSON("/data", function (res) {
+//                 $.each(res, function (i, v) {
+//                   series.addPoint(v);
+//                 });
+//               });
+//             }, 2000);
+//           }
+//         }
+//       },
+//       rangeSelector : {
+//         selected : 1
+//       },
+//       title : {
+//         text : 'Real-time Monitoring'
+//       },
+//       series : [{
+//         name : 'Real-time Number',
+//         data : data,
+//         tooltip: {
+//           valueDecimals: 2
+//         }
+//       }]
+//     });
+//   });
+// });
 </script>
 {% endblock %}

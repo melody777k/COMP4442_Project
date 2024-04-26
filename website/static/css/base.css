@@ -4,8 +4,9 @@
 
 .btn {
   color: #dddddd;
-  background-color: #0a024d;
-  border: 1px #0a024d solid;
+  background-color: #002040;
+  border: 1px #002040 solid;
+  border-radius: 1px;
   padding: 8px 4px;
 }
 

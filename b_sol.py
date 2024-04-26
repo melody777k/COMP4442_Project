@@ -28,7 +28,7 @@ for item in data:
             grouped_data[key] = [values]
 
 
-output_filename = "b.txt"
+output_filename = "resultB.txt"
 
 with open(output_filename, 'w', encoding='utf-8') as output_file:
     for key, values in grouped_data.items():

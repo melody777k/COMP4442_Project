@@ -15,7 +15,6 @@ def db_connection():
 
 	# insert new database
 	cur = mydb.cursor()
-	# cur.execute("select * from Students")
  
 	print("successfully connect to the database")
 	
@@ -32,10 +31,17 @@ def tupleToJsonA(t):
 
 	return jsonList
 
-# def tupleToJsonB(t):
-# 	jsonListB = []
-
-# 	return jsonListB
+def driverList():
+	driverList = []
+	results = open("../result.txt", encoding='utf-8')
+	with results as file:
+		for line in file.readlines():
+			line = line.strip('\n') 
+			line = eval(line)
+			jsonList = tupleToJsonA(line)
+			driverList.append(jsonList[0])
+	# print(driverList)
+	return driverList
 
 @application.route('/')
 def home():
@@ -52,27 +58,41 @@ def behavior():
 			jsonList = tupleToJsonA(line)
 			jsonListsA.append(jsonList)
 
-	# print(jsonLists)
-	# print(type(jsonLists))
+	print(jsonListsA)
+	print(type(jsonListsA))
 
 	return render_template("behavior.html", result=jsonListsA)
 
-@application.route('/diagram/<driver_id>/<int:total_time>')
-def diagram(driver_id, total_time):
-	print("##############")
-	print("Server: received request for records of driver", driver_id, "within", total_time, "seconds")
-	print("##############")
+# @application.route('/diagram/<driver_id>/<int:total_time>')
+@application.route('/diagram',methods = ['POST', 'GET'])
+# def diagram(driver_id, total_time):
+def diagram():
+	drivers = driverList()
 	driver_data = []
 	result_data = []
-	with open('../b.txt', 'r') as all_data:
-		driver_data = [line.strip() for line in all_data.readlines() if line.split(",")[0] == driver_id]
-		first_record = driver_data[0]
-		first_time = datetime.strptime(first_record.split(",")[2], "%Y-%m-%d %H:%M:%S")
-		for line in driver_data:
-			time = datetime.strptime(line.split(",")[2], "%Y-%m-%d %H:%M:%S")
-			if time - first_time <= timedelta(seconds=total_time):
-				result_data.append(line)
-	return jsonify(result_data)
+	results = []
+	if request.method == 'POST':
+		driverId = json.loads(request.data)["driverId"]
+		totalTime = json.loads(request.data)["totalTime"]
+		print("Server: received request for records of driver", driverId, "within", totalTime, "seconds")
+		with open('../resultB.txt', 'r') as all_data:
+			driver_data = [line.strip() for line in all_data.readlines() if line.split(",")[0] == driverId]
+			first_record = driver_data[0]
+			first_time = datetime.strptime(first_record.split(",")[2], "%Y-%m-%d %H:%M:%S")
+			for line in driver_data:
+				time = datetime.strptime(line.split(",")[2], "%Y-%m-%d %H:%M:%S")
+				if time - first_time <= timedelta(seconds=totalTime):
+					result_data.append(line)
+
+		for result in result_data:
+			result = result.strip('\n') 
+			result = result.split(",")
+			results.append(result)
+		
+		print(results)
+		return jsonify(results)
+
+	return render_template("diagram.html", drivers = drivers)
 
 
 if __name__ == '__main__':
