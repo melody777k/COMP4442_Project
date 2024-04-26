@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import json
+from datetime import datetime, timedelta
 
 application = Flask(__name__, static_url_path='/static')
 #app = Flask(__name__)
@@ -50,18 +51,23 @@ def behavior():
 
 	return render_template("behavior.html", result=jsonLists)
 
-@application.route('/diagram')
-def diagram():
-		# mydb = db_connection()
+@application.route('/diagram/<driver_id>/<int:total_time>')
+def diagram(driver_id, total_time):
+	print("##############")
+	print("Server: received request for records of driver", driver_id, "within", total_time, "seconds")
+	print("##############")
+	driver_data = []
+	result_data = []
+	with open('../b.txt', 'r') as all_data:
+		driver_data = [line.strip() for line in all_data.readlines() if line.split(",")[0] == driver_id]
+		first_record = driver_data[0]
+		first_time = datetime.strptime(first_record.split(",")[2], "%Y-%m-%d %H:%M:%S")
+		for line in driver_data:
+			time = datetime.strptime(line.split(",")[2], "%Y-%m-%d %H:%M:%S")
+			if time - first_time <= timedelta(seconds=total_time):
+				result_data.append(line)
+	return jsonify(result_data)
 
-		# cur = mydb.cursor()
-		# cur.execute("select * from Students")
-
-		# myresult = cur.fetchall()
-		# for result in myresult:
-		# 	print(result)
-
-	return render_template("diagram.html")
 
 if __name__ == '__main__':
 	application.run(port=3000, debug=True)
