@@ -1,20 +1,10 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}Behavior{% endblock %}
 {% block content %}
 
 <h1 class="center">Behavior during the given period</h1>
 
 <div class="table-sty">
-    <div class="select">
-        <span>From</span>
-        <input type="date" id="behavior-start-date" />
-        <input type="time" id="behavior-start-time" />
-        <span>To</span>
-        <input type="date" id="behavior-end-date" />
-        <input type="time" id="behavior-end-time" />
-    </div>
-    <div class="center"><button type="button" class="btn" onclick="generate()">Generate summary report</button></div>
-
     <table style="width: 1000px;">
         <tr>
             <th>Driver ID</th>

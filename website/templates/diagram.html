@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}Diagram{% endblock %}
 {% block content %}
 
 <h1 class="center">Diagram</h1>
@@ -7,6 +7,30 @@
 <h3 class="center" id="show"></h3>
 
 <!-- diagram -->
+<table style="width: 1000px;">
+    <tr>
+        <th>Driver ID</th>
+        <th>Speed</th>
+        <th>Time</th>
+        <th>Overspeed</th>
+    </tr>
+    {% for resultLine in result %}
+    <tr>
+        <td>{{resultLine[0]}}</td>
+        <td>{{resultLine[1]}}</td>
+        <td>{{resultLine[2]}}</td>
+        <td>{{resultLine[3]}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<!-- warning -->
+<div>
+    <h3 class="center">Overspeed Warning in this interval</h3>
+    {% for resultLine in result if resultLine[3] == 1 %}
+        <span>{{resultLine[0]}} is Overspeed</span>
+    {% endfor %}
+</div>
 
 {% endblock %}
 
