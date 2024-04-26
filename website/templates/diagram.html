@@ -6,104 +6,123 @@
 
 <!-- Diagram -->
 <div class="center">
-    {% for driver in drivers %}
-    <button class="btn" id="{{driver}}" onclick="getId(this)" value="{{driver}}">{{driver}}</button>
-    {% endfor %}
+    <span>Choose a driver:</span>
+    <select id="selectedDriver" onchange="getId()">
+        {% for driver in drivers %}
+        <option value="{{driver}}">{{driver}}</option>
+        {% endfor %}
+    </select>
 </div>
 
-<div>
-    aaa
-    {% for result in results %}
-        <span>aaaa</span>
-        <div>{{result[0]}}</div>
-        <div>{{result[1]}}</div>
-        <div>{{result[3]}}</div>
-        <div>{{result[2]}}</div>
-    {% endfor %}
-</div>
-
-<!-- <div id="container" style="min-width:400px;height:400px"></div> -->
-
-
-<!-- Warning -->
-<div>
-    <h1 class="center">Overspeed Warning list in this interval</h1>
-    {% for result in results if result[3] == 1 %}
-        <span>{{driver}} is Overspeed</span>
-    {% endfor %}
+<div class="center diagram">
+    <canvas id="lineChart"></canvas>
 </div>
 
 {% endblock %}
 
 {% block javascript %}
+
 <script type="text/javascript">
     var results = [];
     var t;
     var refreshTime = 30;
-    setInterval("Refresh()", 1000);
+    var lineChart = null;
+
+    setInterval(Refresh, 1000);
+
     function Refresh() {
-        t = (localStorage.getItem("time")== null)? 1: localStorage.getItem("time")
-        if (refreshTime == 2) {
+        t = localStorage.getItem("time") == null ? 1 : localStorage.getItem("time");
+        if (refreshTime === 1) {
             window.location.reload();
             t++;
-            localStorage.setItem("time",t);
-            // console.log(t)
+            localStorage.setItem("time", t);
         }
-        document.getElementById('show').innerHTML = "Diagram: Refresh this page after " + refreshTime + " seconds";
+        document.getElementById("show").innerHTML = "Diagram: Refresh this page after " + refreshTime + " seconds";
         refreshTime--;
-        // console.log(t);
     }
-    function getId(button) {
-        driverId = button.value;
-        // driverId = document.getElementById('{{driver}}');
-        // console.log(driverId)
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get the selected driver from local storage
+        var selectedDriver = localStorage.getItem("driver");
+
+        // Set the selected driver in the dropdown
+        var selectElement = document.getElementById("selectedDriver");
+        for (var i = 0; i < selectElement.options.length; i++) {
+            if (selectElement.options[i].value === selectedDriver) {
+                selectElement.selectedIndex = i;
+                break;
+            }
+        }
+
+        // Call getId() function to fetch data and update the chart
+        getId();
+    });
+
+    function getId() {
+        var selectElement = document.getElementById("selectedDriver");
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var driverId = selectedOption.value;
+        var time = localStorage.getItem("time");
+        localStorage.setItem("driver", driverId);
+        console.log(driverId)
         fetch("/diagram", {
             method: "POST",
             body: JSON.stringify({
                 driverId: driverId,
-                totalTime: t*30
+                totalTime: time * 30
             }),
-        }).then((_res) => {
-            console.log(_res)
-            results = _res.values
-            console.log(results)
+        })
+            .then((_res) => _res.json())
+            .then((data) => {
+                console.log(data);
+                if (lineChart !== null) {
+                    lineChart.destroy();
+                }
+            const labels = data.map(result => result.split(",")[2]);
+            const time = data.map(result => result.split(",")[2].split(" ")[1]);
+            const speeds = data.map(result => parseFloat(result.split(",")[1]));
+            const overspeeds = data.map(result => parseInt(result.split(",")[3]));
+
+            const ctx = document.getElementById("lineChart").getContext("2d");
+            lineChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: time,
+                    datasets: [
+                        {
+                            label: "Warning: Overspeed!",
+                            data: speeds.map((value, index) => overspeeds[index] === 1 ? value : null),
+                            backgroundColor: "red",
+                            borderColor: "red",
+                            borderWidth: 1,
+                            pointBackgroundColor: "red",
+                            pointBorderColor: "red"
+                        },
+                        {
+                            label: "Speed",
+                            data: speeds,
+                            backgroundColor: "rgba(0, 123, 255, 0.5)",
+                            borderColor: "rgba(0, 123, 255, 1)",
+                            borderWidth: 1,
+                            pointBackgroundColor: "rgba(0, 123, 255, 0.5)",
+                            pointBorderColor: "rgba(0, 123, 255, 1)"
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+        })
+        .catch((error) => {
+            console.error(error);
         });
-    }
-//     $(function () {
-//   $.getJSON('/diagram', function (data) {
-//     // Create the chart
-//     $('#container').highcharts('StockChart', {
-//       chart: {
-//         events: {
-//           load: function () {
-//             var chart = $('#container').highcharts();
-//             var series = chart.series[0];
-//             //2 seconds interval
-//             setInterval(function () {         
-//               $.getJSON("/data", function (res) {
-//                 $.each(res, function (i, v) {
-//                   series.addPoint(v);
-//                 });
-//               });
-//             }, 2000);
-//           }
-//         }
-//       },
-//       rangeSelector : {
-//         selected : 1
-//       },
-//       title : {
-//         text : 'Real-time Monitoring'
-//       },
-//       series : [{
-//         name : 'Real-time Number',
-//         data : data,
-//         tooltip: {
-//           valueDecimals: 2
-//         }
-//       }]
-//     });
-//   });
-// });
+   }
 </script>
+
 {% endblock %}

@@ -83,14 +83,9 @@ def diagram():
 				time = datetime.strptime(line.split(",")[2], "%Y-%m-%d %H:%M:%S")
 				if time - first_time <= timedelta(seconds=totalTime):
 					result_data.append(line)
-
-		for result in result_data:
-			result = result.strip('\n') 
-			result = result.split(",")
-			results.append(result)
 		
-		print(results)
-		return jsonify(results)
+		print(result_data)
+		return jsonify(result_data)
 
 	return render_template("diagram.html", drivers = drivers)
 

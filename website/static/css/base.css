@@ -16,6 +16,12 @@
   color: #0a024d;
 }
 
+.diagram {
+  width: 1000px;
+  height: 400px;
+  overflow-x: scroll;
+}
+
 li {
   float: left;
 }
