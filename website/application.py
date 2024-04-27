@@ -19,24 +19,22 @@ def db_connection():
 	cur = mydb.cursor()
  
 	print("successfully connect to the database")
-    cur.execute("SELECT * FROM your_table")  # Replace 'your_table' with the actual table name
+	
+	cur.execute("SELECT * FROM SparkA")
 
     # Fetch all rows
-    rows = cur.fetchall()
+	rows = cur.fetchall()
 
     # Generate result.txt file
-    with open('result.txt', 'w') as file:
-        for row in rows:
-            file.write(str(row) + '\n')
+	with open('result.txt', 'w') as file:
+		for row in rows:
+			file.write(str(row) + '\n')
 
-    print("Result saved to result.txt file")
+	print("Result saved to result.txt file")
 
-    # Close cursor and connection
-    cur.close()
-    mydb.close()
+	cur.close()
+	mydb.close()
 
-	
-	# return mydb
 
 def tupleToJsonA(t):
 	jsonList = []
