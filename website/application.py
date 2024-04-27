@@ -9,7 +9,7 @@ CORS(application)
 #app = Flask(__name__)
 
 def db_connection():
-	mydb = mysql.connector.connect( host = 'database-2.c9gkgua66wjp.us-east-1.rds.amazonaws.com',
+	mydb = mysql.connector.connect( host = 'database-2.e7gkasa67xlp.us-east-1.rds.amazonaws.com',
 	user = 'group9',
 	port = '3306',
 	database = 'group9_db',
@@ -19,6 +19,22 @@ def db_connection():
 	cur = mydb.cursor()
  
 	print("successfully connect to the database")
+    cur.execute("SELECT * FROM your_table")  # Replace 'your_table' with the actual table name
+
+    # Fetch all rows
+    rows = cur.fetchall()
+
+    # Generate result.txt file
+    with open('result.txt', 'w') as file:
+        for row in rows:
+            file.write(str(row) + '\n')
+
+    print("Result saved to result.txt file")
+
+    # Close cursor and connection
+    cur.close()
+    mydb.close()
+
 	
 	# return mydb
 
