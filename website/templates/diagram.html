@@ -46,7 +46,7 @@
     function refreshDiagram() {
         localStorage.clear();
         window.location.reload();
-        alert("You will be starting from the beginning")
+        alert("You will be starting from the beginning");
     }
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -94,6 +94,7 @@
                     console.log("aaa")
                 }
                 else {
+                    document.getElementById("nodisplay").style.display = "block";
                     const labels = data.map(result => result.split(",")[2]);
                     const time = data.map(result => result.split(",")[2].split(" ")[1]);
                     const speeds = data.map(result => parseFloat(result.split(",")[1]));
