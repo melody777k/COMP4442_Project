@@ -2,8 +2,10 @@ from flask import Flask, render_template, request, jsonify
 import json
 import mysql.connector
 from datetime import datetime, timedelta
+from flask_cors import CORS, cross_origin
 
 application = Flask(__name__, static_url_path='/static')
+CORS(application)
 #app = Flask(__name__)
 
 def db_connection():
@@ -33,7 +35,7 @@ def tupleToJsonA(t):
 
 def driverList():
 	driverList = []
-	results = open("../result.txt", encoding='utf-8')
+	results = open("./result.txt", encoding='utf-8')
 	with results as file:
 		for line in file.readlines():
 			line = line.strip('\n') 
@@ -44,13 +46,15 @@ def driverList():
 	return driverList
 
 @application.route('/')
+@cross_origin()
 def home():
 	return render_template('home.html')
 
 @application.route('/behavior',methods = ['POST', 'GET'])
+@cross_origin()
 def behavior():
 	jsonListsA = []
-	results = open("../result.txt", encoding='utf-8')
+	results = open("./result.txt", encoding='utf-8')
 	with results as file:
 		for line in file.readlines():
 			line = line.strip('\n') 
@@ -63,9 +67,8 @@ def behavior():
 
 	return render_template("behavior.html", result=jsonListsA)
 
-# @application.route('/diagram/<driver_id>/<int:total_time>')
 @application.route('/diagram',methods = ['POST', 'GET'])
-# def diagram(driver_id, total_time):
+@cross_origin()
 def diagram():
 	drivers = driverList()
 	driver_data = []
@@ -74,7 +77,7 @@ def diagram():
 		driverId = json.loads(request.data)["driverId"]
 		totalTime = json.loads(request.data)["totalTime"]
 		print("Server: received request for records of driver", driverId, "within", totalTime, "seconds")
-		with open('../resultB.txt', 'r') as all_data:
+		with open('./resultB.txt', 'r') as all_data:
 			driver_data = [line.strip() for line in all_data.readlines() if line.split(",")[0] == driverId]
 			if driver_data == []:
 				return jsonify("No data to display")
